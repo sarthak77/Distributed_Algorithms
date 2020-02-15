@@ -24,7 +24,7 @@ public class Server
 	{ 
 		if(args.length!=1)
 		{
-			System.out.println("Error:port number not given");
+			System.out.println("Usage:java Server <server_port>");
 			System.exit(0);
 		}
 		else

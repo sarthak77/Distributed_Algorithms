@@ -16,7 +16,7 @@ public class Client
 		{ 
 			if(args.length!=2)
 			{
-				System.out.println("Error:port number not given");
+				System.out.println("Usage:java Client <server_ip> <server_port>");
 				System.exit(0);
 			}
 

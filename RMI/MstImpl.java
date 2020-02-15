@@ -66,10 +66,12 @@ public class MstImpl extends java.rmi.server.UnicastRemoteObject implements Mst
         //n=no of vertices
         int n=graph.V;
 
-        //initialising check array
+        //initialising check array to false (default is null)
         Boolean check[]=new Boolean[n];
         for(int i=0;i<n;i++)
+        {
             check[i]=false;
+        }
 
         //declaring variables
         PriorityQueue<edge> pq =new PriorityQueue<edge>(new comparator());
@@ -78,18 +80,22 @@ public class MstImpl extends java.rmi.server.UnicastRemoteObject implements Mst
 
         //insert min weight edge of 0th vertex in pq
         pair tp1=new pair();
+        Boolean fl=false;
         tp1.y=Integer.MAX_VALUE;
+
         for(pair p: graph.adjListArray[0])
         {
             if(p.y<=tp1.y)
             {
+                fl=true;
                 tp1.x=p.x;
                 tp1.y=p.y;
             }
         }
 
         edge e1=new edge();
-        if(tp1.y!=Integer.MAX_VALUE)
+        //if 0th node not connected to any node then no mst
+        if(fl)
         {
             e1.v1=0;
             e1.v2=tp1.x;
@@ -102,15 +108,14 @@ public class MstImpl extends java.rmi.server.UnicastRemoteObject implements Mst
         //running prims algorithm
         while(pq.peek()!=null)
         {
-
             //pop min edeg from pq
-            e1=pq.poll();
+            e1=pq.poll();//get top element and pop
             v1=e1.v1;
             v2=e1.v2;
             w=e1.w;
 
-            //if no cycle formed && no self loop
-            if((!check[v1] || !check[v2]) && (v1!=v2))
+            //if no cycle formed
+            if(!check[v1] || !check[v2])
             {
                 check[v1]=true;
                 check[v2]=true;
@@ -154,7 +159,7 @@ public class MstImpl extends java.rmi.server.UnicastRemoteObject implements Mst
     }
 
 	// Constructor Declaration 
-	public MstImpl()throws java.rmi.RemoteException 
+	public MstImpl() throws java.rmi.RemoteException 
 	{ 
 		super(); 
 	} 
@@ -164,7 +169,7 @@ public class MstImpl extends java.rmi.server.UnicastRemoteObject implements Mst
 	List<String> gr_name = new ArrayList<String>();
 	List<Graph>  gr = new ArrayList<Graph>();
 
-	public void add_graph(String s,int n)throws java.rmi.RemoteException
+	public void add_graph(String s,int n) throws java.rmi.RemoteException
 	{
 		gr_name.add(s);
 		Graph graph=new Graph(n);
@@ -174,8 +179,13 @@ public class MstImpl extends java.rmi.server.UnicastRemoteObject implements Mst
 	public void add_edge(String s,int v1,int v2,int w) throws java.rmi.RemoteException
 	{
 		int ind=gr_name.indexOf(s);
-		Graph g = gr.get(ind);
-		addEdge(g,v1-1,v2-1,w);	//because input given acc to 1 based indexing
+        Graph g = gr.get(ind);
+        //dont add self loops
+        if(v1!=v2)
+        {
+            //because input given acc to 1 based indexing
+            addEdge(g,v1-1,v2-1,w);
+        }
 	}
 
 	public long get_mst(String s) throws java.rmi.RemoteException
