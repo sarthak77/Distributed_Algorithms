@@ -61,7 +61,7 @@ public class MstImpl extends java.rmi.server.UnicastRemoteObject implements Mst
 	} 
     
     //function to get mst of the graph
-    int getmst(Graph graph)
+    long getmst(Graph graph)
     {
         //n=no of vertices
         int n=graph.V;
@@ -73,7 +73,8 @@ public class MstImpl extends java.rmi.server.UnicastRemoteObject implements Mst
 
         //declaring variables
         PriorityQueue<edge> pq =new PriorityQueue<edge>(new comparator());
-        int count=0,ret=0,v1,v2,w;
+        int count=0,v1,v2,w;
+        long ret=0;
 
         //insert min weight edge of 0th vertex in pq
         pair tp1=new pair();
@@ -108,8 +109,8 @@ public class MstImpl extends java.rmi.server.UnicastRemoteObject implements Mst
             v2=e1.v2;
             w=e1.w;
 
-            //if no cycle formed
-            if(!check[v1] || !check[v2])
+            //if no cycle formed && no self loop
+            if((!check[v1] || !check[v2]) && (v1!=v2))
             {
                 check[v1]=true;
                 check[v2]=true;
@@ -153,8 +154,7 @@ public class MstImpl extends java.rmi.server.UnicastRemoteObject implements Mst
     }
 
 	// Constructor Declaration 
-	public MstImpl() 
-		throws java.rmi.RemoteException 
+	public MstImpl()throws java.rmi.RemoteException 
 	{ 
 		super(); 
 	} 
@@ -175,10 +175,10 @@ public class MstImpl extends java.rmi.server.UnicastRemoteObject implements Mst
 	{
 		int ind=gr_name.indexOf(s);
 		Graph g = gr.get(ind);
-		addEdge(g,v1-1,v2-1,w);	
+		addEdge(g,v1-1,v2-1,w);	//because input given acc to 1 based indexing
 	}
 
-	public int get_mst(String s) throws java.rmi.RemoteException
+	public long get_mst(String s) throws java.rmi.RemoteException
 	{
 		int ind=gr_name.indexOf(s);
 		Graph g = gr.get(ind);

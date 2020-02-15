@@ -8,6 +8,6 @@ public interface Mst extends java.rmi.Remote
 	public void add_edge(String s,int v1,int v2,int w)
 			throws java.rmi.RemoteException; 
 
-	public int get_mst(String s)
+	public long get_mst(String s)
 			throws java.rmi.RemoteException; 
 } 
