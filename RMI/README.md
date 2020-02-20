@@ -42,4 +42,6 @@ Prim's algorithm for finding MST is used. If the graph contains MST, it will ret
    ```
    get_mstt graph_name
    ```
+   
+**Note:-** Input is assumed to be consistent so error handling for inconsistent input not implemented.
 
