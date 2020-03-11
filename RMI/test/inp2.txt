@@ -1,0 +1,5 @@
+add_graph graph1 4
+add_edge graph1 1 2 2147483646
+add_edge graph1 2 3 2147483646
+add_edge graph1 3 4 1
+get_mst graph1
