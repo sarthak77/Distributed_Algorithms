@@ -1,4 +1,4 @@
--module(tut15).
+-module(tut).
 
 -export([start/0, ping/2, pong/0]).
 
@@ -25,5 +25,5 @@ pong() ->
     end.
 
 start() ->
-    Pong_PID = spawn(tut15, pong, []),
-    spawn(tut15, ping, [3, Pong_PID]).
+    Pong_PID = spawn(tut, pong, []),
+    spawn(tut, ping, [3, Pong_PID]).
