@@ -3,9 +3,9 @@ using namespace std;
 #define M 100000
 int main()
 {
-    // for(int i=M;i>=0;i--)
+    // for(int i=M;i>=-M;i--)
         // cout << i << " ";
-    for(int i=0;i<=M;i++)
+    for(int i=-M;i<=M;i++)
         cout << i << " ";
     return 0;
 }
